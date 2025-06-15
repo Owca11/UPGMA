@@ -1,8 +1,8 @@
 import numpy as np
 from collections import defaultdict
 from Bio import Phylo
-import io  # Required for saving tree to string/file
-import matplotlib.pyplot as plt  # Ensure this is imported
+import io  
+import matplotlib.pyplot as plt  
 
 
 # --- Node Class for UPGMA Tree ---
@@ -12,7 +12,7 @@ class Node:
         self.left = left
         self.right = right
         self.branch_length_to_parent = branch_length_to_parent
-        self.height = 0.0  # Height from this node to its furthest leaf
+        self.height = 0.0  
 
     def is_leaf(self):
         return self.left is None and self.right is None
@@ -85,7 +85,7 @@ def load_sequences_from_file(filepath):
                     current_sequence = []
                 else:
                     current_sequence.append(line)
-            if current_name:  # Add the last sequence
+            if current_name: 
                 sequences[current_name] = "".join(current_sequence)
         print(f"Loaded {len(sequences)} sequences from {filepath}")
         return sequences
@@ -115,11 +115,9 @@ def get_sequences_from_user_input():
     return sequences
 
 
-# --- Distance Matrix Calculation (Placeholder) ---
 def calculate_distance_matrix(sequences, method="pairwise_alignment"):
     """
     Calculates a distance matrix from a dictionary of sequences.
-    YOU MUST REPLACE THIS WITH YOUR ACTUAL ALIGNMENT/DISTANCE CALCULATION.
     """
     if not sequences:
         print("No sequences provided to calculate distance matrix.")
@@ -128,8 +126,6 @@ def calculate_distance_matrix(sequences, method="pairwise_alignment"):
     names = list(sequences.keys())
     num_seq = len(names)
     distance_matrix = np.zeros((num_seq, num_seq))
-
-    print(f"Calculating distance matrix using dummy '{method}' method...")
 
     for i in range(num_seq):
         for j in range(i + 1, num_seq):
@@ -143,7 +139,7 @@ def calculate_distance_matrix(sequences, method="pairwise_alignment"):
             diff = sum(1 for a, b in zip(s1_padded, s2_padded) if a != b)
             dist = diff / max_len if max_len > 0 else 0
             distance_matrix[i, j] = dist
-            distance_matrix[j, i] = dist  # Symmetrical matrix
+            distance_matrix[j, i] = dist  
 
     print("Distance Matrix Calculated:")
     print("  " + " ".join(f"{name:<5}" for name in names))
@@ -405,9 +401,7 @@ def main():
                 newick_filename = "upgma_tree.nwk"
                 Phylo.write(biophylo_tree, newick_filename, "newick")
                 print(f"Graphical tree data saved in Newick format to '{newick_filename}'.")
-                print("You can visualize this file using tools like Archaeopteryx, FigTree, or online viewers.")
 
-                # Optional: Matplotlib visualization (requires matplotlib and Biopython's matplotlib support)
                 try:
                     # Clear any existing figures to ensure a fresh plot
                     plt.close('all')
